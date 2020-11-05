@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Math</title>
+	
+	<style>
+		body {
+			font-family: Arial, Helvetica, sans-serif;
+			background-color: lightgray;
+		}
+		
+		.big-div {
+			margin-top: 400px;
+		}
+		
+		.row-div {
+			display: flex;
+			justify-content: center;
+			padding-bottom: 15px;
+		}
+
+		input[type="radio"]:checked + label{
+			font-weight: bold;
+		}
+
+		#equals{
+			background-color: lightskyblue;
+			border-radius: 25%;
+			border-width: 0px;
+			box-shadow: 2px 2px 1px gray;
+			padding: 10px;
+
+		}
+
+		#clear{
+			background-color: white;
+			border-radius: 25%;
+			border-width: 0px;
+			box-shadow: 2px 2px 1px gray;
+			padding: 10px;
+		}
+
+		#resultText{
+			font-size: larger;
+		}
+	</style>
+
+	<script>
+	var operatorSelection;
+	var numOne;
+	var numTwo;
+	var result;
+
+	function saveRadioValue() { 
+        var ele = document.getElementsByName('operator'); 
+
+        for(i = 0; i < ele.length; i++) { 
+            if(ele[i].checked){
+				operatorSelection = ele[i].value;
+			}
+        } 
+    } 
+
+	function doMath(){
+		saveRadioValue();
+
+		numOne = document.getElementById("firstNumber").value;
+		numTwo = document.getElementById("secondNumber").value;
+
+		if (operatorSelection == "add"){
+			result = eval(numOne) + eval(numTwo);
+			displayResult();
+		} else if (operatorSelection == "subtract"){
+			result = numOne - numTwo;
+			displayResult();
+		} else if (operatorSelection == "multiply"){
+			result = numOne * numTwo;
+			displayResult();
+		} else if (operatorSelection == "divide" && numTwo != 0){
+			result = numOne / numTwo;
+			displayResult();
+		} else if (operatorSelection == "divide" && numTwo == 0){
+			document.getElementById("resultText").innerText = "Please don't divide by zero, the universe might collapse.";
+		} else {
+			document.getElementById("resultText").innerText = "Something went wrong.";
+		}
+	}
+
+	function displayResult(){
+		document.getElementById("resultText").innerText = "The result is " + result;
+	}
+
+	function clearInputs() {
+		document.getElementById('firstNumber').value="";
+		document.getElementById('secondNumber').value="";
+		document.getElementById("resultText").innerText = "Please enter two numbers and select an operator to continue.";
+		document.getElementById("firstNumber").focus(); 
+	}
+	</script>
+
+  </head>
+  <body>
+    <div id="bigDiv" class="big-div">
+		<div id="firstRow" class="row-div">
+			<div id="firstInput">
+				First number <br>
+				<input type="number" id="firstNumber" autofocus>
+					
+				</input>
+			</div>
+			&nbsp &nbsp
+			<div id="secondInput">
+				Second number <br>
+				<input type="number" id="secondNumber">
+					
+				</input>
+			</div>
+		</div>
+		
+		<div id="secondRow" class="row-div">
+			<form>
+				<input type="radio" id="add" name="operator" value="add" checked>
+				<label for="add">Add</label>
+				
+				<input type="radio" id="subtract" name="operator" value="subtract">
+				<label for="subtract">Subtract</label>
+				
+				<input type="radio" id="multiply" name="operator" value="multiply">
+				<label for="multiply">Multiply</label>
+				
+				<input type="radio" id="divide" name="operator" value="divide">
+				<label for="divide">Divide</label>
+			</form>
+		</div>
+		
+		<div id="thirdRow" class="row-div">
+				<input type="button" id="equals" value="=" onclick="doMath()">
+				&nbsp &nbsp
+				<input type="button" id="clear" value="Clear"  onclick="clearInputs()">
+				
+		</div>
+		
+		<div id="fourthRow" class="row-div">
+				<p id="resultText">Please enter two numbers and select an operator to continue.</p>
+		</div>
+	</div>
+	
+  </body>
+</html>
